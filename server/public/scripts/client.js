@@ -4,7 +4,7 @@ function getQuotes(){
     axios.get('/quotes').then((response) => {
         console.log("success", response.data);
         let quotesFromServer = response.data
-        rendertoDom(quote)
+        rendertoDom(quotesFromServer)
 // good indication of end of route })
 }).catch((error) => {
     console.log(error);
@@ -12,7 +12,7 @@ function getQuotes(){
 })
 }
 
-getQuotes()
+
 
 function rendertoDom(quotes){
     let outputList = document.querySelector('#output')
