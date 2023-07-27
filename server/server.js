@@ -1,7 +1,7 @@
 let express = require('express');
 let app = express();
 const port = 5001;
-
+app.use(express.json())
 
 const quoteList = require('./quoteList')
 // ./ is navigating internal file navigation
@@ -18,6 +18,14 @@ app.get('/quotes', function(req, res){
     // send back list of quotes
     // so we can see it in our browser
     res.send(quoteList)
+})
+
+app.post('/quotes', (req, res) => {
+    console.log('get a POST request.', req.body);
+
+    let quote = req.body
+    quoteList.push(quote)
+    res.sendStatus(201)
 })
 
 
