@@ -1,23 +1,34 @@
 let express = require('express');
+// Using express to reduce the amount of code to make the server run. 
 let app = express();
 const port = 5001;
+
+app.use(express.static('server/public'));
+// Telling server were html and js files are.
+
+app.listen(port, function() {
+    console.log('listening on port', port);
+})
+// Like a while loop, this will just keep running until we tell it to stop. 
+
+// -----------new week 7 code below-------------
+
 app.use(express.json())
 
 const quoteList = require('./quoteList')
 // ./ is navigating internal file navigation
 // the / on 15 is a route
 
-app.use(express.static('server/public'));
-
-
 // when we visit localhost:5001/quotes
 // in our browser, express will call this function
-app.get('/quotes', function(req, res){
+app.get('/quotes', (req, res) => {
     console.log('request for /quotes was made');
-
+    // '/quotes' is the path
+    // req is request and res is response
     // send back list of quotes
     // so we can see it in our browser
     res.send(quoteList)
+    // the response is to send the quote list
 })
 
 app.post('/quotes', (req, res) => {
@@ -29,8 +40,18 @@ app.post('/quotes', (req, res) => {
 })
 
 
-app.listen(port, function() {
-    console.log('listening on port', port);
+
+
+
+// DELETE
+app.delete('/quotes/:index', (req,res) => {
+    console.log('Delete request!', req.body);
+    console.log(req.params);
+
+let index = req.params.index
+
+quoteList.splice(index, index)
+res.sendStatus(201)
 })
 
 // http://localhost:5001/quotes

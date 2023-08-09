@@ -80,3 +80,4 @@ console.log(shoes);
 let runningShoeList = shoes.filter(runningShoes)
 
 console.log(runningShoeList);
+
