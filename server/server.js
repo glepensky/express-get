@@ -50,7 +50,7 @@ app.delete('/quotes/:index', (req,res) => {
 
 let index = req.params.index
 
-quoteList.splice(index, index)
+quoteList.splice(index, 1)
 res.sendStatus(201)
 })
 

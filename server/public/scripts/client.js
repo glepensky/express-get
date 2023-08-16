@@ -2,6 +2,8 @@ console.log('script sourced.');
 
 function getQuotes(){
     axios.get('/quotes').then((response) => {
+        // .then is a promise - 
+        // it assumes that everything went correctly
         console.log("success", response.data);
         let quotesFromServer = response.data
         rendertoDom(quotesFromServer)
@@ -17,11 +19,14 @@ function getQuotes(){
 function rendertoDom(quotes){
     let outputList = document.querySelector('#output')
     outputList.innerHTML = ''
-
+    let i = 0;
     for(let quote of quotes){
         outputList.innerHTML += `
-            <p>${quote.text} - ${quote.author} </p>
+            <p>${quote.text} - ${quote.author} 
+            <button onClick="deleteQuote(${i})">Delete</button>
+            </p>
         `
+        i += 1;
     }
 }
 
@@ -49,6 +54,27 @@ function submitForm(event) {
     })
 
 }
+
+
+//AXIOS DELETE by index and get all quotes again
+
+/**
+ * 
+ * @param {Number} index Index to delete.
+ */
+
+function deleteQuote(index){
+    console.log(`Deleting quote ${index}`);
+    axios.delete(`/quotes/${index}`).then ((response) => {
+        console.log(response);
+        getQuotes();
+    }).catch((error) => {
+        console.log(error);
+        alert('Something went wrong.')
+    });
+}
+
+
 
 // .Filter
 
